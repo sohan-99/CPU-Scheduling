@@ -1,11 +1,10 @@
 #include <iostream>
 
 using namespace std;
-
 int main()
 {
     int n;
-    cout << "Enter how many processes: ";
+    cout << "Enter how many processes : ";
     cin >> n;
     int burst_time[n], process[n];
 
