@@ -23,14 +23,16 @@ int main()
         {
             if (burst_time[i] < burst_time[j])
             {
-                int temp = burst_time[i];
-                burst_time[i] = burst_time[j];
-                burst_time[j] = temp;
+                // int temp = burst_time[i];
+                // burst_time[i] = burst_time[j];
+                // burst_time[j] = temp;
+                swap(burst_time[i], burst_time[j]);
 
                 // Process
-                int temp_process = process[i];
-                process[i] = process[j];
-                process[j] = temp_process;
+                // int temp_process = process[i];
+                // process[i] = process[j];
+                // process[j] = temp_process;
+                swap(process[i], process[j]);
             }
         }
     }

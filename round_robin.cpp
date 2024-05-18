@@ -1,49 +1,51 @@
 #include <iostream>
-#include <stdlib.h>
+#include <vector>
 using namespace std;
 
 int main()
 {
-    int count, n, time, remain, flag = 0, time_quantum;
-    int wait_time = 0, turnaround_time = 0, bt[10], rt[10];
-    cout << "Enter Total Process:\t ";
+    int n, time = 0, remain, time_quantum;
+    cout << "Enter Total Number of Processes: ";
     cin >> n;
     remain = n;
-    for (count = 0; count < n; count++)
+    vector<int> bt(n), rt(n);
+
+    for (int i = 0; i < n; ++i)
     {
-        cout << "Enter Burst Time for Process Number " << count + 1 << ": ";
-        cin >> bt[count];
-        rt[count] = bt[count];
+        cout << "Enter Burst Time for Process " << i + 1 << ": ";
+        cin >> bt[i];
+        rt[i] = bt[i];
     }
-    cout << "Enter Time Quantum:\t";
+
+    cout << "Enter Time Quantum: ";
     cin >> time_quantum;
-    cout << "\n\nProcess\t| Turnaround Time | Waiting Time\n\n";
-    for (time = 0, count = 0; remain != 0;)
+    cout << "\nProcess | Turnaround Time | Waiting Time\n\n";
+
+    int wait_time = 0, turnaround_time = 0;
+    for (int i = 0; remain != 0;)
     {
-        if (rt[count] <= time_quantum && rt[count] > 0)
+        if (rt[i] > 0)
         {
-            time += rt[count];
-            rt[count] = 0;
-            flag = 1;
+            if (rt[i] <= time_quantum)
+            {
+                time += rt[i];
+                rt[i] = 0;
+                remain--;
+                int turnaround = time;
+                int waiting = time - bt[i];
+                cout << "P[" << i + 1 << "]    | " << turnaround << "              | " << waiting << "\n";
+                wait_time += waiting;
+                turnaround_time += turnaround;
+            }
+            else
+            {
+                rt[i] -= time_quantum;
+                time += time_quantum;
+            }
         }
-        else if (rt[count] > 0)
-        {
-            rt[count] -= time_quantum;
-            time += time_quantum;
-        }
-        if (rt[count] == 0 && flag == 1)
-        {
-            remain--;
-            cout << "P[" << count + 1 << "]\t|\t" << time << "\t|\t" << time - bt[count] << "\n";
-            wait_time += time - bt[count];
-            turnaround_time += time;
-            flag = 0;
-        }
-        if (count == n - 1)
-            count = 0;
-        else
-            count++;
+        i = (i + 1) % n;
     }
+
     cout << "\nAverage Waiting Time = " << (float)wait_time / n;
     cout << "\nAverage Turnaround Time = " << (float)turnaround_time / n;
     return 0;
