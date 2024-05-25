@@ -43,8 +43,8 @@ int main()
     for (int i = 0; i < n; i++)
     {
         cout << "Waiting time of p" << process[i] << ": " << waiting_time << endl;
-        total_waiting_time += waiting_time;
         waiting_time += burst_time[i];
+        total_waiting_time += waiting_time;
     }
 
     float average_waiting_time = total_waiting_time / n;
